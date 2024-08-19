@@ -30,7 +30,7 @@ public class EstablishPlanToOfferDelegate implements JavaDelegate {
     public void execute(DelegateExecution execution){
         log.info("Establishing plan to offer...");
         Plan planToOffer=null;
-        SubscriberData subscriberData = (SubscriberData) execution.getVariable("subscriberAddedEvent");
+        SubscriberData subscriberData = (SubscriberData) execution.getVariable("subscriberData");
         Plan currentPlan = this.getPlan(subscriberData.getPlanId());
         Integer elapsedDays = Period.between(subscriberData.getPlanRenewalDate(),  LocalDate.now()).getDays();//Days from last plan renewal
         if (elapsedDays == 0){

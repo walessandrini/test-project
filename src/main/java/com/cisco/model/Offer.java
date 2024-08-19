@@ -15,5 +15,4 @@ import java.time.LocalDate;
 public class Offer implements Serializable{
     private LocalDate timeToLive;
     private LocalDate futureTimeToLive;
-    private Boolean stillValid;
 }
