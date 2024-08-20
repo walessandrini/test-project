@@ -4,6 +4,7 @@ import com.cisco.model.SubscriberAddedEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -19,7 +20,11 @@ public class NotificationsAllowedDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution){
         Boolean subscriberAllowsNotifications;
-        SubscriberAddedEvent subscriberAddedEvent = (SubscriberAddedEvent) execution.getVariable("subscriberAddedEvent");
+        SubscriberAddedEvent subscriberAddedEvent;
+        Map subscriberAddedEventMap = (Map) execution.getVariable("subscriberAddedEvent");
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JSR310Module());
+        subscriberAddedEvent = objectMapper.convertValue(subscriberAddedEventMap,SubscriberAddedEvent.class);
         Map<String, Object> response =this.invokeApi(subscriberAddedEvent);
         subscriberAllowsNotifications = ((String)response.get("name")).contains("Apple");
         log.info("Does the new subscriber {} allow Notifications: {}", subscriberAddedEvent.getNewSubscriber().getMdn(), subscriberAllowsNotifications);

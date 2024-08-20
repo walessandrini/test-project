@@ -2,6 +2,8 @@ package com.cisco.service;
 
 import com.cisco.model.Destination;
 import com.cisco.model.SubscriberAddedEvent;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
@@ -28,7 +30,12 @@ public class SubscriberEventService {
         // Define process variables if needed
         List<Destination> destinations = new ArrayList<>();
         Map<String, Object> variables = new HashMap<>();
-        variables.put("subscriberAddedEvent", subscriberAddedEvent);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JSR310Module());
+        Map subscriberAddedEventMap = objectMapper.convertValue(subscriberAddedEvent, Map.class);
+        ((Map) ((Map) subscriberAddedEventMap.get("newSubscriber")).get("baseOffer")).put("timeToLive",subscriberAddedEvent.getNewSubscriber().getBaseOffer().getTimeToLive());
+        ((Map)((Map) subscriberAddedEventMap.get("newSubscriber")).get("baseOffer")).put("futureTimeToLive",subscriberAddedEvent.getNewSubscriber().getBaseOffer().getFutureTimeToLive());
+        variables.put("subscriberAddedEvent", subscriberAddedEventMap);
         ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
         // Get the RuntimeService from the process engine
         RuntimeService runtimeService = processEngine.getRuntimeService();
@@ -40,7 +47,8 @@ public class SubscriberEventService {
                 .executionIdIn(processInstance.getId()).variableName("subscriberAddedEvent").singleResult();
         SubscriberAddedEvent subscriberAddedEventOutput;
         if (subscriberAddedEventVariable!=null){
-            subscriberAddedEventOutput = (SubscriberAddedEvent) subscriberAddedEventVariable.getValue();
+            Map subscriberAddedEventOutputMap = (Map) subscriberAddedEventVariable.getValue();
+            subscriberAddedEventOutput = objectMapper.convertValue(subscriberAddedEventOutputMap,SubscriberAddedEvent.class);
             log.debug("subscriberAddedEventOutput: " + subscriberAddedEventOutput);
          }
         else{
