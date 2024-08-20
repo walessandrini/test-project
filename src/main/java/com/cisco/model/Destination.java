@@ -6,8 +6,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-//import com.threeci.tf.messaging.producer.MessageSenderService;
-//import com.threeci.tfbis.service.messageprocessor.MessageSenderResolver;
+
 import java.io.Serializable;
 import java.util.Map;
 

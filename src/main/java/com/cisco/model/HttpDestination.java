@@ -1,13 +1,9 @@
 package com.cisco.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
 import lombok.Data;
 import spinjar.com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-//import com.google.common.collect.ImmutableMap;
-//import com.threeci.tf.messaging.producer.MessageSenderService;
-//import com.threeci.tfbis.service.messageprocessor.MessageSenderResolver;
-import java.util.HashMap;
+
 import java.util.Map;
 
 /**
@@ -29,56 +25,4 @@ public class HttpDestination extends Destination {
   private Map<String, String> extraParams;
   private String target;
 
-//  public HttpDestination(Builder builder) {
-//    this.extraParams = builder.extraParams;
-//    this.target = builder.target;
-//    super.setParams(this.extraParams);
-////    super.setParams(ImmutableMap.<String, String>builder().putAll(builder.extraParams).build());
-//  }
-
-
-//  public static Builder builder() {
-//    return new Builder();
-//  }
-
-  /**
-   * Returns the routing key for RabbitMq destination.
-   *
-   * @param rkResolver
-   * @return
-   */
-//  @Override
-//  public MessageSenderService<OutgoingMessage> getMsgSender(MessageSenderResolver rkResolver) {
-//    return rkResolver.getSender(this);
-//  }
-
-//  public Map<String, String> getExtraParams() {
-//    return extraParams;
-//  }
-
-  /** LogDestination builder. */
-//  @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "with")
-//  public static class Builder {
-//    private Map<String, String> extraParams = new HashMap<>();
-//    private String target;
-//
-//    public Builder withExtraParams(Map<String, String> extraParams) {
-//      this.extraParams = extraParams;
-//      return this;
-//    }
-//
-//    public Builder withTarget(String target) {
-//      this.target = target;
-//      return this;
-//    }
-//
-//    public Builder withMetadata(String key, String value) {
-//      this.extraParams.put(key, value);
-//      return this;
-//    }
-//
-//    public HttpDestination build() {
-//      return new HttpDestination(this);
-//    }
-//  }
 }

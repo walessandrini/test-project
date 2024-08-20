@@ -1,18 +1,20 @@
 package com.cisco.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
+import lombok.Data;
+
 import java.time.LocalDate;
 
-@Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Offer implements Serializable{
-    private LocalDate timeToLive;
-    private LocalDate futureTimeToLive;
+public abstract class Offer<A extends Offer<?>> {
+
+  /** The unique identifier. */
+  String id;
+
+  /** The date on which the offer was redeemed. */
+  LocalDate redemptionDate;
+
+  /** The last date on which the offer is valid. */
+  LocalDate timeToLive;
+
 }

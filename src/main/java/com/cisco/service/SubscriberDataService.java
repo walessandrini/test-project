@@ -1,8 +1,6 @@
 package com.cisco.service;
 
-import com.cisco.model.Destination;
 import com.cisco.model.Plan;
-import com.cisco.model.SubscriberAddedEvent;
 import com.cisco.model.SubscriberData;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.ProcessEngine;
@@ -11,17 +9,14 @@ import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.history.HistoricVariableInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.springframework.stereotype.Service;
-import scala.concurrent.impl.FutureConvertersImpl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
 @Slf4j
 public class SubscriberDataService {
-    private static String ESTABILSH_PLAN_TO_OFFER_PROCESS = "establish_plan_to_offer";
+    private final static String ESTABILSH_PLAN_TO_OFFER_PROCESS = "establish_plan_to_offer";
 
     public Plan establishPlanToOffer(SubscriberData subscriberData) {
         return this.invokeBusinessProcess(subscriberData);
@@ -41,7 +36,7 @@ public class SubscriberDataService {
         log.info("Started process instance with ID: " + processInstance.getId());
         HistoricVariableInstance subscriberDataVariable = processEngine.getHistoryService().createHistoricVariableInstanceQuery()
                 .executionIdIn(processInstance.getId()).variableName("subscriberData").singleResult();
-        SubscriberData subscriberDataOutput = null;
+        SubscriberData subscriberDataOutput;
         if (subscriberDataVariable!=null){
             subscriberDataOutput = (SubscriberData) subscriberDataVariable.getValue();
             log.debug("subscriberDataOutput: " + subscriberDataOutput);

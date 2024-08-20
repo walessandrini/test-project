@@ -1,6 +1,7 @@
 package com.cisco.service;
 
-import com.cisco.model.*;
+import com.cisco.model.Plan;
+import com.cisco.model.SubscriberData;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -10,13 +11,12 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Component
 @Slf4j
 public class EstablishPlanToOfferDelegate implements JavaDelegate {
-    private static List<Plan> plans = List.of(new Plan(1, 3072), new Plan(2, 5120), new Plan(3, 10240), new Plan(4, 20480));
+    private final static List<Plan> plans = List.of(new Plan(1, 3072), new Plan(2, 5120), new Plan(3, 10240), new Plan(4, 20480));
 
     public List<Plan> getPlans(){
         return plans;
@@ -29,7 +29,7 @@ public class EstablishPlanToOfferDelegate implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution){
         log.info("Establishing plan to offer...");
-        Plan planToOffer=null;
+        Plan planToOffer;
         SubscriberData subscriberData = (SubscriberData) execution.getVariable("subscriberData");
         Plan currentPlan = this.getPlan(subscriberData.getPlanId());
         Integer elapsedDays = Period.between(subscriberData.getPlanRenewalDate(),  LocalDate.now()).getDays();//Days from last plan renewal

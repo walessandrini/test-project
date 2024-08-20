@@ -9,8 +9,6 @@ import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.history.HistoricVariableInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.springframework.stereotype.Service;
-import spinjar.com.fasterxml.jackson.core.JsonProcessingException;
-import spinjar.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +18,7 @@ import java.util.Map;
 @Service
 @Slf4j
 public class SubscriberEventService {
-    private static String GET_DESTINATIONS_PROCESS = "get_destinations";
+    private final static String GET_DESTINATIONS_PROCESS = "get_destinations";
 
     public List<Destination> subscriberAdded(SubscriberAddedEvent subscriberAddedEvent) {
         return this.invokeBusinessProcess(subscriberAddedEvent);
@@ -40,7 +38,7 @@ public class SubscriberEventService {
         log.debug("Started process instance with ID: " + processInstance.getId());
         HistoricVariableInstance subscriberAddedEventVariable = processEngine.getHistoryService().createHistoricVariableInstanceQuery()
                 .executionIdIn(processInstance.getId()).variableName("subscriberAddedEvent").singleResult();
-        SubscriberAddedEvent subscriberAddedEventOutput = null;
+        SubscriberAddedEvent subscriberAddedEventOutput;
         if (subscriberAddedEventVariable!=null){
             subscriberAddedEventOutput = (SubscriberAddedEvent) subscriberAddedEventVariable.getValue();
             log.debug("subscriberAddedEventOutput: " + subscriberAddedEventOutput);
