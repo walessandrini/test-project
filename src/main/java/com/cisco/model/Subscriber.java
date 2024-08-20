@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Map;
 
-@JsonDeserialize(using = SubscriberDeserializer.class)
+@JsonDeserialize
 @Data
 @Builder
 @NoArgsConstructor

@@ -42,6 +42,6 @@ public class NotificationsAllowedDelegate implements JavaDelegate {
 
     private Integer getId(SubscriberAddedEvent subscriberAddedEvent) {
        String initChar=subscriberAddedEvent.getNewSubscriber().getMdn().substring(0,1);
-       return Integer.parseInt(initChar);
+       return !initChar.equals("0") ? Integer.parseInt(initChar) : 10;
     }
 }

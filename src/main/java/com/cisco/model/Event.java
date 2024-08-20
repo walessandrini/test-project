@@ -23,9 +23,6 @@ import java.io.Serializable;
 //    @Type(value = SubscriberMismatchIndexEvent.class, name = "SubscriberMismatchIndexEvent")
 })
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public abstract class Event implements Serializable {
 
   // Time of the update that generated this event
