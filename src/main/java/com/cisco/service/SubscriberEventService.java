@@ -42,7 +42,7 @@ public class SubscriberEventService {
         // Start the process instance by process definition key
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(GET_DESTINATIONS_PROCESS, variables);
         // Output the process instance ID
-        log.debug("Started process instance with ID: " + processInstance.getId());
+        log.info("Started process instance with ID: " + processInstance.getId());
         HistoricVariableInstance subscriberAddedEventVariable = processEngine.getHistoryService().createHistoricVariableInstanceQuery()
                 .executionIdIn(processInstance.getId()).variableName("subscriberAddedEvent").singleResult();
         SubscriberAddedEvent subscriberAddedEventOutput;

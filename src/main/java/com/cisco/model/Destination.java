@@ -16,6 +16,7 @@ import java.util.Map;
  */
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
     property = "@class")
 @JsonSubTypes({
     @Type(value = HttpDestination.class, name = "HttpDestination"),
@@ -28,16 +29,5 @@ public abstract class Destination implements Serializable {
 
   @JsonIgnore private Map<String, String> params;
 
-//  public Destination() {}
-//
-//  public Map<String, String> getParams() {
-//    return params;
-//  }
-//
-//  public void setParams(Map<String, String> params) {
-//    this.params = params;
-//  }
 
-//  public abstract MessageSenderService<OutgoingMessage> getMsgSender(
-//      MessageSenderResolver rkResolver);
 }
